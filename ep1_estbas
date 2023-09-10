@@ -1,0 +1,79 @@
+#include <stdio.h>
+#include <math.h>
+
+#define  TAM_MAX 10
+
+int main() {
+    int n;
+    float num;
+    float soma=0, media=0, mediana=0, vmax=0, vmin=0;
+    
+    float vetor[TAM_MAX];
+
+    printf("Quantos números terá em sua série? ");
+    scanf("%d", &n);
+
+    if( n > TAM_MAX ){
+        printf("O número máximo de elementos é %d\n", TAM_MAX);
+        return 0;
+    }
+     if (n <= 0) {
+        printf("A quantidade de valores deve ser maior que zero.\n");
+        return 1;
+    }
+    
+    printf("Quais os %d valores de sua série:\n", n);
+    for( int conta=0; conta<n ; conta++) { 
+        printf("%d > ", conta+1);
+        scanf("%f", &num);
+        vetor[conta] = num;
+        soma = soma + num;
+    }
+    
+    printf("Soma total: %.2f\n", soma);
+    media = soma/n;
+    printf("Média aritimética> %.2f\n", media);
+    
+    
+    vmax = vetor[0];
+    vmin = vetor[0];
+    for (int i = 1; i < n; i++) {
+        if (vetor[i] > vmax) {
+            vmax = vetor[i];
+        }
+        if (vetor[i] < vmin) {
+            vmin = vetor[i];
+        }
+    }
+    for (int i = 0; i < n - 1; i++) {
+    for (int j = i + 1; j < n; j++) {
+        if (vetor[i] > vetor[j]) {
+            float temp = vetor[i];
+            vetor[i] = vetor[j];
+            vetor[j] = temp;
+            }
+        }
+    }
+    printf("Valor máximo: %.2f\n", vmax);
+    printf("Valor mínimo: %.2f\n", vmin);
+
+    
+    if (n % 2 == 0) {
+        mediana = (vetor[n / 2 - 1] + vetor[n / 2]) / 2.0;
+    } else {
+        mediana = vetor[n / 2];
+    }
+    printf("Mediana: %.2f\n", mediana);
+    
+    
+    soma=0;
+    for( int i=0; i<n; i++ ){
+           soma += (vetor[i]-media)*(vetor[i]-media);
+    }
+    printf("Desvio padrão populacional: %.2f\n", sqrt( soma / n ) );
+    printf("Desvio padrão amostral: %.2f\n\n", sqrt( soma / (n-1) ) );
+
+    return 0;
+    
+    
+}
